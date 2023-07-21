@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "3j4+bL0BsLcomvBrZ/b5dJlq5dyeb57o1H0rG55xN74f6zCQ+AsuuuT7A3UpB5oXqWKXwFbHaMNGKJu55jXAvw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\gsleg\\Documents\\GitHub\\RunnerGame\\RunnerGame\\GameClasses\\GameClasses.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\gsleg\\.nuget\\packages\\monogame.content.builder.task\\3.8.1.303\\monogame.content.builder.task.3.8.1.303.nupkg.sha512",
+    "C:\\Users\\gsleg\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512"
+  ],
+  "logs": []
+}

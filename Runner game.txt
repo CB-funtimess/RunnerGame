@@ -1,0 +1,13 @@
+Runner game
+Runner animation
+Character can move about screen (but must stay on the ground under gravity) (a,d,space)
+Projectiles move towards runner
+If they hit, damage is taken (3 lives max)
+Obstacles come at runner from right-hand side
+-> Level editor
+
+Then:
+- Powerups
+- Guns
+- Character change to vary abilities
+- Use the game onactivated() and ondeactivated() to pause
