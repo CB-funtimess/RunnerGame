@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/Backgrounds/Cave_Rocks.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/Backgrounds/Dark_Cave_Rocks.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/Backgrounds/Medium_Dark_Cave_Rocks_Background.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/Backgrounds/Medium_Dark_Cave_Rocks.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/Fonts/Earthrealm12.spritefont</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Button_Pressed.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Button_Unpressed.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Tomb_Runner.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

@@ -1,11 +1,19 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
+namespace GameClasses.GameStates;
 
-public class GameState
+public abstract class GameState
 {
-    public GameState()
-    {
-        
-    }
+    #region Fields
+    protected Game game;
+    protected ContentManager content;
+    #endregion
+
+    #region Methods
+    public abstract void Initialize();
+    public abstract void LoadContent();
+    public abstract void Update(GameTime gameTime);
+    public abstract void Draw(GameTime gameTime, SpriteBatch _spriteBatch);
+    #endregion
 }

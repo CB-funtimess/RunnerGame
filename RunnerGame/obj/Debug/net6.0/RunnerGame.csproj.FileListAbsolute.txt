@@ -48,3 +48,13 @@ C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\obj\Debug\net6.0\refint\Ru
 C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\obj\Debug\net6.0\RunnerGame.pdb
 C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\obj\Debug\net6.0\RunnerGame.genruntimeconfig.cache
 C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\obj\Debug\net6.0\ref\RunnerGame.dll
+C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\Backgrounds\Cave_Rocks.xnb
+C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\Backgrounds\Dark_Cave_Rocks.xnb
+C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\Backgrounds\Medium_Dark_Cave_Rocks.xnb
+C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\GameClasses.dll
+C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\GameClasses.pdb
+C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\Fonts\Earthrealm12.xnb
+C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\ObjectTextures\Button_Pressed.xnb
+C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\ObjectTextures\Button_Unpressed.xnb
+C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\Backgrounds\Medium_Dark_Cave_Rocks_Background.xnb
+C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\ObjectTextures\Tomb_Runner.xnb
