@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-namespace GameClasses.GameObjects;
+namespace Engine.GameObjects;
 
 public class GameObject
 {
@@ -19,6 +19,8 @@ public class GameObject
     public Rectangle ObjectRectangle => new Rectangle((int)TopLeftPoint.X, (int)TopLeftPoint.Y, dimensions.X, dimensions.Y);
     public int XRadius => dimensions.X / 2;
     public int YRadius => dimensions.Y / 2;
+
+    public int DrawOrder { get; set; } // Smallest is drawn last
     #endregion
 
     #region Methods
@@ -29,6 +31,7 @@ public class GameObject
         position = centralPosition;
         this.colour = colour;
         Enabled = true;
+        DrawOrder = 5;
     }
 
     public GameObject(Texture2D texture, Color colour, Rectangle size)
@@ -38,6 +41,7 @@ public class GameObject
         this.colour = colour;
         Enabled = true;
         position = size.Center.ToVector2();
+        DrawOrder = 5;
     }
 
     // Method to draw objects using a rectangle

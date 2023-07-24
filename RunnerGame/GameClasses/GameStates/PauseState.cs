@@ -1,7 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using GameClasses.GameObjects;
+using Engine.GameObjects;
+using Engine.GameStates;
 namespace GameClasses.GameStates;
 
 public class PauseState : GameState

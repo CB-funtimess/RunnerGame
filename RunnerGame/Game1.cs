@@ -19,7 +19,7 @@ public class Game1 : Game
         _graphics.IsFullScreen = true;
         _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
         _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-        
+        IsFixedTimeStep = true;
         _sManager = new ScreenManager(this)
         {
             WindowDimensions = new Rectangle(new Point(0,0), new Point(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight))

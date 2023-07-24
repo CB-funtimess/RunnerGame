@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using GameClasses.GameObjects;
+using Engine.GameObjects;
+using Engine.GameStates;
+using GameClasses.GeneralClasses;
 namespace GameClasses.GameStates;
 
 public class MenuState : GameState
@@ -38,10 +40,16 @@ public class MenuState : GameState
         Rectangle titleRect = new Rectangle(titlePos, titleSize);
 
         Texture2D backgroundTexture = content.Load<Texture2D>("Backgrounds/Medium_Dark_Cave_Rocks_Background");
-        background = new GameObject(backgroundTexture, Color.White, window);
+        background = new GameObject(backgroundTexture, Color.White, window)
+        {
+            DrawOrder = 1
+        };
 
         Texture2D titleTexture = content.Load<Texture2D>("ObjectTextures/Tomb_Runner");
-        title = new GameObject(titleTexture, Color.White, titleRect);
+        title = new GameObject(titleTexture, Color.White, titleRect)
+        {
+            DrawOrder = 0,
+        };
 
         Texture2D buttonPressed = content.Load<Texture2D>("ObjectTextures/Button_Pressed");
         Texture2D buttonUnpressed = content.Load<Texture2D>("ObjectTextures/Button_Unpressed");
@@ -50,7 +58,8 @@ public class MenuState : GameState
         playButton = new Button(buttonUnpressed, earthrealm12, buttonRect, Color.White, Color.White)
         {
             HoverTexture = buttonPressed,
-            Text = "Play"
+            Text = "Play",
+            DrawOrder = 0,
         };
         playButton.Click += PlayButton_Click;
 
@@ -58,7 +67,8 @@ public class MenuState : GameState
         optionsButton = new Button(buttonUnpressed, earthrealm12, buttonRect, Color.White, Color.White)
         {
             HoverTexture = buttonPressed,
-            Text = "Options"
+            Text = "Options",
+            DrawOrder = 0,
         };
         optionsButton.Click += OptionsButton_Click;
 
@@ -66,11 +76,13 @@ public class MenuState : GameState
         exitButton = new Button(buttonUnpressed, earthrealm12, buttonRect, Color.White, Color.White)
         {
             HoverTexture = buttonPressed,
-            Text = "Exit"
+            Text = "Exit",
+            DrawOrder = 0,
         };
         exitButton.Click += ExitButton_Click;
 
-        objects.AddRange(new GameObject[]{playButton, optionsButton, exitButton, title});
+        objects.AddRange(new GameObject[]{playButton, optionsButton, exitButton, title, background});
+        objects = Sorting.SortByDrawOrder(objects.ToArray()).ToList();
     }
 
     private void PlayButton_Click(object sender, EventArgs e)
@@ -98,7 +110,6 @@ public class MenuState : GameState
 
     public override void Draw(GameTime gameTime, SpriteBatch _spriteBatch)
     {
-        background.Draw(_spriteBatch);
         for (int i = 0; i < objects.Count; i++)
         {
             objects[i].Draw(_spriteBatch);

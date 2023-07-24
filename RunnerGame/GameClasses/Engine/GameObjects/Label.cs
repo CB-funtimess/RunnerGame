@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-namespace GameClasses.GameObjects;
+namespace Engine.GameObjects;
 
 public class Label : GameObject // This class is a label with a box texture
 {
