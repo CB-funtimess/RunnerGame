@@ -1,8 +1,10 @@
+using System.ComponentModel.Design;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using GameClasses.GameStates;
 using Engine.GameStates;
+
 namespace GameClasses.Managers;
 
 public class ScreenManager
@@ -24,11 +26,20 @@ public class ScreenManager
     {
         this.game = game;
         menu = new MenuState(game);
+        menu.Play += Play_Click;
+        //menu.Options += Options_Click;
+
         play = new PlayState();
         pause = new PauseState();
 
         current = menu;
     }
+
+    private void Play_Click(object sender, EventArgs e)
+    {
+        current = play;
+    }
+
     public void Initialize()
     {
         menu.Initialize();

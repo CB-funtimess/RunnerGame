@@ -22,5 +22,6 @@ public class Sprite : GameObject
     public Sprite(Texture2D texture, Vector2 centralPosition, Color colour, Point dimensions) : base(texture, centralPosition, colour, dimensions)
     {
     }
+
     #endregion
 }

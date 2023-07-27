@@ -17,6 +17,11 @@ public class MenuState : GameState
     private GameObject title;
     #endregion
 
+    #region Properties
+    public EventHandler Play;
+    public EventHandler Options;
+    #endregion
+
     #region Methods
     public MenuState(Game game)
     {
@@ -32,7 +37,7 @@ public class MenuState : GameState
     public override void LoadContent()
     {
         Rectangle window = game.Window.ClientBounds;
-        Point buttonSize = new Point(game.Window.ClientBounds.Width / 4, game.Window.ClientBounds.Height / 16);
+        Point buttonSize = new Point(window.Width / 4, window.Height / 16);
         Point buttonPos = new Point(window.Center.X - (buttonSize.X / 2), window.Center.Y + (buttonSize.Y / 2));
         Rectangle buttonRect = new Rectangle(buttonPos, buttonSize);
         Point titleSize = new Point(buttonSize.X, (int)(buttonSize.Y * 3.75));
@@ -87,12 +92,12 @@ public class MenuState : GameState
 
     private void PlayButton_Click(object sender, EventArgs e)
     {
-
+        Play?.Invoke(this, EventArgs.Empty);
     }
 
     private void OptionsButton_Click(object sender, EventArgs e)
     {
-
+        Options?.Invoke(this, EventArgs.Empty);
     }
 
     private void ExitButton_Click(object sender, EventArgs e)
