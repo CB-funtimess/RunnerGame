@@ -74,5 +74,10 @@ public class GameObject
     {
         this.colour = colour;
     }
+
+    public void Dispose()
+    {
+        texture.Dispose();
+    }
     #endregion
 }

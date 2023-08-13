@@ -9,12 +9,7 @@ namespace GameClasses.GameStates;
 public class MenuState : GameState
 {
     #region Fields
-    private GameObject background;
     private List<GameObject> objects;
-    private Button playButton;
-    private Button optionsButton;
-    private Button exitButton;
-    private GameObject title;
     #endregion
 
     #region Properties
@@ -45,13 +40,13 @@ public class MenuState : GameState
         Rectangle titleRect = new Rectangle(titlePos, titleSize);
 
         Texture2D backgroundTexture = content.Load<Texture2D>("Backgrounds/Medium_Dark_Cave_Rocks_Background");
-        background = new GameObject(backgroundTexture, Color.White, window)
+        GameObject background = new GameObject(backgroundTexture, Color.White, window)
         {
             DrawOrder = 1
         };
 
         Texture2D titleTexture = content.Load<Texture2D>("ObjectTextures/Tomb_Runner");
-        title = new GameObject(titleTexture, Color.White, titleRect)
+        GameObject title = new GameObject(titleTexture, Color.White, titleRect)
         {
             DrawOrder = 0,
         };
@@ -60,7 +55,7 @@ public class MenuState : GameState
         Texture2D buttonUnpressed = content.Load<Texture2D>("ObjectTextures/Button_Unpressed");
         SpriteFont earthrealm12 = content.Load<SpriteFont>("Fonts/Earthrealm12");
 
-        playButton = new Button(buttonUnpressed, earthrealm12, buttonRect, Color.White, Color.White)
+        Button playButton = new Button(buttonUnpressed, earthrealm12, buttonRect, Color.White, Color.White)
         {
             HoverTexture = buttonPressed,
             Text = "Play",
@@ -69,7 +64,7 @@ public class MenuState : GameState
         playButton.Click += PlayButton_Click;
 
         buttonRect.Offset(0, (int)(buttonSize.Y * 1.25));
-        optionsButton = new Button(buttonUnpressed, earthrealm12, buttonRect, Color.White, Color.White)
+        Button optionsButton = new Button(buttonUnpressed, earthrealm12, buttonRect, Color.White, Color.White)
         {
             HoverTexture = buttonPressed,
             Text = "Options",
@@ -78,7 +73,7 @@ public class MenuState : GameState
         optionsButton.Click += OptionsButton_Click;
 
         buttonRect.Offset(0, (int)(buttonSize.Y * 1.25));
-        exitButton = new Button(buttonUnpressed, earthrealm12, buttonRect, Color.White, Color.White)
+        Button exitButton = new Button(buttonUnpressed, earthrealm12, buttonRect, Color.White, Color.White)
         {
             HoverTexture = buttonPressed,
             Text = "Exit",
@@ -120,5 +115,14 @@ public class MenuState : GameState
             objects[i].Draw(_spriteBatch);
         }
     }
+
+    public override void Dispose()
+    {
+        for (int i = 0; i < objects.Count; i++)
+        {
+            objects[i].Dispose();
+        }
+    }
+
     #endregion
 }

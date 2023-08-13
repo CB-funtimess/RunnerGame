@@ -12,8 +12,14 @@
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Button_Pressed.png</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Button_Unpressed.png</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Tomb_Runner.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/SpriteSheets/Death-Sheet-Player.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/SpriteSheets/Idle-Sheet-Player.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/SpriteSheets/Run-Sheet-Player.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

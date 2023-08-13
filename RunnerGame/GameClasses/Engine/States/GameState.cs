@@ -15,5 +15,6 @@ public abstract class GameState
     public abstract void LoadContent();
     public abstract void Update(GameTime gameTime);
     public abstract void Draw(GameTime gameTime, SpriteBatch _spriteBatch);
+    public abstract void Dispose();
     #endregion
 }

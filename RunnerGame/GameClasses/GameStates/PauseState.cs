@@ -7,6 +7,12 @@ namespace GameClasses.GameStates;
 
 public class PauseState : GameState
 {
+    public PauseState(Game game)
+    {
+        this.game = game;
+        content = game.Content;
+    }
+
     public override void Initialize()
     {
 
@@ -25,5 +31,10 @@ public class PauseState : GameState
     public override void Draw(GameTime gameTime, SpriteBatch _spriteBatch)
     {
 
+    }
+
+    public override void Dispose()
+    {
+        throw new NotImplementedException();
     }
 }

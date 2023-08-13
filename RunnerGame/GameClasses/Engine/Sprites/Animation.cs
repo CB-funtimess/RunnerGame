@@ -13,6 +13,7 @@ public class Animation
     #endregion
 
     #region Properties
+    public Texture2D SpriteSheet {get; private set;}
     public int Lifespan
     {
         get
@@ -52,8 +53,9 @@ public class Animation
     #endregion
 
     #region Methods
-    public Animation(bool looping=false)
+    public Animation(Texture2D spriteSheet, bool looping=true)
     {
+        SpriteSheet = spriteSheet;
         isLoop = looping;
     }
 
@@ -64,7 +66,14 @@ public class Animation
 
     public void Update(GameTime gameTime)
     {
-        animationAge = (animationAge+1) % Lifespan;
+        if (isLoop)
+        {
+            animationAge = (animationAge+1) % Lifespan;
+        }
+        else
+        {
+            animationAge++;
+        }
     }
 
     public void Reset()

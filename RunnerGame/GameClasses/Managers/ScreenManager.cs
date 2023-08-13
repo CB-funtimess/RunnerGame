@@ -29,8 +29,8 @@ public class ScreenManager
         menu.Play += Play_Click;
         //menu.Options += Options_Click;
 
-        play = new PlayState();
-        pause = new PauseState();
+        play = new PlayState(game);
+        pause = new PauseState(game);
 
         current = menu;
     }
