@@ -79,7 +79,7 @@ public class PlayState : GameState
         {
             p1.BeginRunning(-1);
         }
-        if (pressedKeys.Contains(Keys.D) && !pressedKeys.Contains(Keys.A))
+        else if (pressedKeys.Contains(Keys.D) && !pressedKeys.Contains(Keys.A))
         {
             p1.BeginRunning(1);
         }

@@ -11,7 +11,7 @@ public class Player : Sprite
     private Animation runAnimation;
     private Animation idleAnimation;
     private Animation deathAnimation;
-    private const int speed = 20;
+    private const int speed = 100;
     #endregion
 
     #region Properties
@@ -93,6 +93,15 @@ public class Player : Sprite
             _inUseAnimation = idleAnimation;
         }
 
+        if (Velocity.X < 0)
+        {
+            backwards = true;
+        }
+        else
+        {
+            backwards = false;
+        }
+
         base.Draw(_spriteBatch);
     }
 
@@ -101,6 +110,8 @@ public class Player : Sprite
         runAnimation.Update(gameTime);
         idleAnimation.Update(gameTime);
         deathAnimation.Update(gameTime);
+
+        base.Update(gameTime);
     }
 
     #endregion
