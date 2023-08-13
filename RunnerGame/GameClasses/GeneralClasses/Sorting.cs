@@ -1,4 +1,6 @@
 using Engine.GameObjects;
+using Engine.Sprites;
+
 namespace GameClasses.GeneralClasses;
 
 public static class Sorting
@@ -11,7 +13,6 @@ public static class Sorting
     /// <returns>The sorted array</returns>
     public static GameObject[] SortByDrawOrder(GameObject[] unsorted, bool reverse=true)
     {
-        GameObject[] sorted;
         // Bubble sort
         int n = unsorted.Length;
         bool swapped = true;
@@ -24,6 +25,37 @@ public static class Sorting
                 {
                     var temp = unsorted[j-1];
                     unsorted[j-1] = unsorted[j];
+                    unsorted[j] = temp;
+                    swapped = true;
+                }
+            }
+            n--;
+        }
+
+        if (reverse)
+        {
+            return unsorted.Reverse().ToArray();
+        }
+        else
+        {
+            return unsorted;
+        }
+    }
+
+    public static Sprite[] SortByDrawOrder(Sprite[] unsorted, bool reverse = true)
+    {
+        // Bubble sort
+        int n = unsorted.Length;
+        bool swapped = true;
+        while (swapped)
+        {
+            swapped = false;
+            for (int j = 1; j < n; j++)
+            {
+                if (unsorted[j].DrawOrder < unsorted[j - 1].DrawOrder)
+                {
+                    var temp = unsorted[j - 1];
+                    unsorted[j - 1] = unsorted[j];
                     unsorted[j] = temp;
                     swapped = true;
                 }

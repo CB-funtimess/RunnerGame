@@ -18,8 +18,9 @@ public class Sprite
     #endregion
 
     #region Properties
-    public Vector2 Velocity {get; protected set;}
-    public Vector2 Acceleration {get; protected set;}
+    public int DrawOrder { get; set; }
+    public Vector2 Velocity { get; protected set; }
+    public Vector2 Acceleration { get; protected set; }
 
     public Vector2 TopLeftPoint => new Vector2(position.X - XRadius, position.Y - YRadius);
     public Rectangle ObjectRectangle => new Rectangle((int)TopLeftPoint.X, (int)TopLeftPoint.Y, dimensions.X, dimensions.Y);
@@ -38,6 +39,7 @@ public class Sprite
         dimensions = size.Size;
         position = size.Center.ToVector2();
         backwards = false;
+        DrawOrder = 5;
     }
 
     public void SetStandardAnimation(Animation standard)

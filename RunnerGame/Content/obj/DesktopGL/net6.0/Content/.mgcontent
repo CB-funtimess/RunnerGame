@@ -4,6 +4,7 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/Backgrounds/Cave_Rocks_Background.png</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/Backgrounds/Cave_Rocks.png</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/Backgrounds/Dark_Cave_Rocks.png</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/Backgrounds/Medium_Dark_Cave_Rocks_Background.png</File>
@@ -17,6 +18,7 @@
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/SpriteSheets/Run-Sheet-Player.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

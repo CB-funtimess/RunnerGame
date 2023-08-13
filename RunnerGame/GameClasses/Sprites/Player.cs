@@ -47,6 +47,8 @@ public class Player : Sprite
     public void BeginJumping()
     {
         IsJumping = true;
+        Velocity = new Vector2(Velocity.X, -500);
+        Acceleration = new Vector2(0, 400);
     }
 
     public void EndJumping()
@@ -76,6 +78,11 @@ public class Player : Sprite
             Rectangle idleSource = new Rectangle(new Point(32 * (i - 1), 0), new Point(32));
             idleAnimation.AddFrame(idleSource, lifespan);
         }
+    }
+
+    public void BoundaryCollision(Rectangle collidingWith)
+    {
+        
     }
 
     public override void Draw(SpriteBatch _spriteBatch)
