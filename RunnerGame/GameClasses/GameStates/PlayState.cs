@@ -86,6 +86,8 @@ public class PlayState : GameState
         {
             gameObjects[i].Update(gameTime);
         }
+
+        // Collision handling comes after sprites have been updated, so that their positions can be correctly modified
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch _spriteBatch)

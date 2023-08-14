@@ -11,7 +11,6 @@ public class Sprite
     protected Animation _inUseAnimation;
 
     protected Color colour;
-    protected Vector2 position;
     protected Point dimensions;
     protected bool _doesDamageToPlayer;
     protected bool backwards;
@@ -19,10 +18,12 @@ public class Sprite
 
     #region Properties
     public int DrawOrder { get; set; }
-    public Vector2 Velocity { get; protected set; }
+    public Vector2 CurrentPosition {get; protected set;}
+    public Vector2 PreviousPosition {get; protected set;}
+    public Vector2 CurrentVelocity { get; protected set; }
+    public Vector2 PreviousVelocity {get; protected set;}
     public Vector2 Acceleration { get; protected set; }
-
-    public Vector2 TopLeftPoint => new Vector2(position.X - XRadius, position.Y - YRadius);
+    public Vector2 TopLeftPoint => new Vector2(CurrentPosition.X - XRadius, CurrentPosition.Y - YRadius);
     public Rectangle ObjectRectangle => new Rectangle((int)TopLeftPoint.X, (int)TopLeftPoint.Y, dimensions.X, dimensions.Y);
     public int XRadius => dimensions.X / 2;
     public int YRadius => dimensions.Y / 2;
@@ -31,13 +32,13 @@ public class Sprite
     #region Methods
     public Sprite(Color colour, Rectangle size, Vector2 velocity, Vector2 acceleration, bool doesDamageToPlayer)
     {
-        Velocity = velocity;
+        CurrentVelocity = velocity;
         Acceleration = acceleration;
         _doesDamageToPlayer = doesDamageToPlayer;
 
         this.colour = colour;
         dimensions = size.Size;
-        position = size.Center.ToVector2();
+        CurrentPosition = size.Center.ToVector2();
         backwards = false;
         DrawOrder = 5;
     }
@@ -50,8 +51,11 @@ public class Sprite
 
     public virtual void Update(GameTime gameTime)
     {
-        Velocity += Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        PreviousPosition = CurrentPosition;
+        PreviousVelocity = CurrentVelocity;
+
+        CurrentVelocity += Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        CurrentPosition += CurrentVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
     }
 
     public virtual void Draw(SpriteBatch _spriteBatch)

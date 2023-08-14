@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Engine.Sprites;
+using System.Security.AccessControl;
+
 
 namespace GameClasses.Sprites;
 
@@ -31,7 +33,7 @@ public class Player : Sprite
     public void BeginRunning(int direction)
     {
         IsRunning = true;
-        Velocity = new Vector2(speed * direction, Velocity.Y);
+        CurrentVelocity = new Vector2(speed * direction, CurrentVelocity.Y);
     }
 
     public void EndRunning()
@@ -39,7 +41,7 @@ public class Player : Sprite
         IsRunning = false;
         if (!IsJumping)
         {
-            Velocity = new Vector2(0);
+            CurrentVelocity = new Vector2(0);
             Acceleration = new Vector2(0);
         }
     }
@@ -47,13 +49,16 @@ public class Player : Sprite
     public void BeginJumping()
     {
         IsJumping = true;
-        Velocity = new Vector2(Velocity.X, -500);
+        CurrentVelocity = new Vector2(CurrentVelocity.X, -500);
         Acceleration = new Vector2(0, 400);
     }
 
-    public void EndJumping()
+    public void EndJumping(Vector2 newPosition)
     {
         IsJumping = false;
+        Acceleration = new Vector2(0, 0);
+        CurrentVelocity = new Vector2(CurrentVelocity.X, 0);
+        CurrentPosition = newPosition;
     }
 
     public void InitialiseAnimations(ContentManager content)
@@ -82,7 +87,7 @@ public class Player : Sprite
 
     public void BoundaryCollision(Rectangle collidingWith)
     {
-        
+
     }
 
     public override void Draw(SpriteBatch _spriteBatch)
@@ -100,7 +105,7 @@ public class Player : Sprite
             _inUseAnimation = idleAnimation;
         }
 
-        if (Velocity.X < 0)
+        if (CurrentVelocity.X < 0)
         {
             backwards = true;
         }
@@ -114,9 +119,7 @@ public class Player : Sprite
 
     public override void Update(GameTime gameTime)
     {
-        runAnimation.Update(gameTime);
-        idleAnimation.Update(gameTime);
-        deathAnimation.Update(gameTime);
+        _inUseAnimation.Update(gameTime);
 
         base.Update(gameTime);
     }
