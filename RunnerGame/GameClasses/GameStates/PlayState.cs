@@ -35,7 +35,7 @@ public class PlayState : GameState
 
     public override void Initialize()
     {
-        Rectangle p1Rect = new Rectangle(new Point(1280, 720), new Point(128, 128));
+        Rectangle p1Rect = new Rectangle(new Point(1280, 720), new Point(96, 96));
         p1 = new Player(Color.White, p1Rect, new Vector2(0,0), new Vector2(0,0));
         sprites = new List<Sprite>();
         gameObjects = new List<GameObject>();
