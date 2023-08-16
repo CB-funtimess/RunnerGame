@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Engine.Sprites;
-using System.Security.AccessControl;
+using GameClasses.GeneralClasses;
 
 
 namespace GameClasses.Sprites;
@@ -25,6 +25,7 @@ public class Player : Sprite
     #region Methods
     public Player(Color colour, Rectangle size, Vector2 velocity, Vector2 acceleration) : base(colour, size, velocity, acceleration, false)
     {
+        Enabled = true;
         Lives = 3;
         IsRunning = false;
         IsJumping = false;
@@ -42,7 +43,6 @@ public class Player : Sprite
         if (!IsJumping)
         {
             CurrentVelocity = new Vector2(0);
-            Acceleration = new Vector2(0);
         }
     }
 
@@ -50,13 +50,11 @@ public class Player : Sprite
     {
         IsJumping = true;
         CurrentVelocity = new Vector2(CurrentVelocity.X, -500);
-        Acceleration = new Vector2(0, 400);
     }
 
     public void EndJumping(Vector2 newPosition)
     {
         IsJumping = false;
-        Acceleration = new Vector2(0, 0);
         CurrentVelocity = new Vector2(CurrentVelocity.X, 0);
         CurrentPosition = newPosition;
     }
@@ -85,9 +83,11 @@ public class Player : Sprite
         }
     }
 
-    public void BoundaryCollision(Rectangle collidingWith)
+    public void BoundaryCollision(double timeOfCollision)
     {
+        CurrentVelocity = new Vector2(CurrentVelocity.X, 0);
 
+        CurrentPosition = PreviousPosition + (PreviousVelocity * (float)timeOfCollision);
     }
 
     public override void Draw(SpriteBatch _spriteBatch)
@@ -120,7 +120,6 @@ public class Player : Sprite
     public override void Update(GameTime gameTime)
     {
         _inUseAnimation.Update(gameTime);
-
         base.Update(gameTime);
     }
 

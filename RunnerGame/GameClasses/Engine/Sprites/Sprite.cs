@@ -17,11 +17,13 @@ public class Sprite
     #endregion
 
     #region Properties
+    public bool IsPlatform { get; protected set; }
+    public bool Enabled { get; protected set; }
     public int DrawOrder { get; set; }
-    public Vector2 CurrentPosition {get; protected set;}
-    public Vector2 PreviousPosition {get; protected set;}
+    public Vector2 CurrentPosition { get; protected set; }
+    public Vector2 PreviousPosition { get; protected set; }
     public Vector2 CurrentVelocity { get; protected set; }
-    public Vector2 PreviousVelocity {get; protected set;}
+    public Vector2 PreviousVelocity { get; protected set; }
     public Vector2 Acceleration { get; protected set; }
     public Vector2 TopLeftPoint => new Vector2(CurrentPosition.X - XRadius, CurrentPosition.Y - YRadius);
     public Rectangle ObjectRectangle => new Rectangle((int)TopLeftPoint.X, (int)TopLeftPoint.Y, dimensions.X, dimensions.Y);
@@ -35,7 +37,7 @@ public class Sprite
         CurrentVelocity = velocity;
         Acceleration = acceleration;
         _doesDamageToPlayer = doesDamageToPlayer;
-
+        IsPlatform = false;
         this.colour = colour;
         dimensions = size.Size;
         CurrentPosition = size.Center.ToVector2();
@@ -54,19 +56,24 @@ public class Sprite
         PreviousPosition = CurrentPosition;
         PreviousVelocity = CurrentVelocity;
 
-        CurrentVelocity += Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
         CurrentPosition += CurrentVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        CurrentVelocity += Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        
+        System.Console.WriteLine($"{Acceleration.Y}, {CurrentVelocity.Y}");
     }
 
     public virtual void Draw(SpriteBatch _spriteBatch)
     {
-        if (backwards)
+        if (Enabled)
         {
-            _spriteBatch.Draw(_inUseAnimation.SpriteSheet, ObjectRectangle, _inUseAnimation.CurrentFrame.SourceRectangle, colour, 0, new Vector2(0), SpriteEffects.FlipHorizontally, 0);
-        }
-        else
-        {
-            _spriteBatch.Draw(_inUseAnimation.SpriteSheet, ObjectRectangle, _inUseAnimation.CurrentFrame.SourceRectangle, colour);
+            if (backwards)
+            {
+                _spriteBatch.Draw(_inUseAnimation.SpriteSheet, ObjectRectangle, _inUseAnimation.CurrentFrame.SourceRectangle, colour, 0, new Vector2(0), SpriteEffects.FlipHorizontally, 0);
+            }
+            else
+            {
+                _spriteBatch.Draw(_inUseAnimation.SpriteSheet, ObjectRectangle, _inUseAnimation.CurrentFrame.SourceRectangle, colour);
+            }
         }
     }
     #endregion

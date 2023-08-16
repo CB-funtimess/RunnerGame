@@ -36,7 +36,7 @@ public class PlayState : GameState
     public override void Initialize()
     {
         Rectangle p1Rect = new Rectangle(new Point(1280, 720), new Point(96, 96));
-        p1 = new Player(Color.White, p1Rect, new Vector2(0,0), new Vector2(0,0));
+        p1 = new Player(Color.White, p1Rect, new Vector2(0,0), new Vector2(0,400));
         sprites = new List<Sprite>();
         gameObjects = new List<GameObject>();
     }
@@ -45,7 +45,7 @@ public class PlayState : GameState
     {
         p1.InitialiseAnimations(content);
 
-        sprites.Add(p1);
+        // Initialise sprites here
         sprites = Sorting.SortByDrawOrder(sprites.ToArray()).ToList();
 
         Rectangle window = game.Window.ClientBounds;
@@ -86,8 +86,27 @@ public class PlayState : GameState
         {
             gameObjects[i].Update(gameTime);
         }
+        p1.Update(gameTime);
 
         // Collision handling comes after sprites have been updated, so that their positions can be correctly modified
+    }
+
+    public void HandleCollisions()
+    {
+        // Find collisions between 
+        for (int i = 0; i < sprites.Count; i++)
+        {
+            if (Collisions.RectanglesColliding(p1.ObjectRectangle, sprites[i].ObjectRectangle))
+            {
+                if (sprites[i].IsPlatform)
+                {
+                    if (p1.CurrentVelocity.Y >= 0) // If sprite is moving down
+                    {
+                        
+                    }
+                }
+            }
+        }
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch _spriteBatch)
@@ -100,6 +119,7 @@ public class PlayState : GameState
         {
             sprites[i].Draw(_spriteBatch);
         }
+        p1.Draw(_spriteBatch);
     }
 
     public override void Dispose()
@@ -132,14 +152,5 @@ public class PlayState : GameState
             game.Exit();
         }
     }
-/*
-    private bool IsColliding(Rectangle r1, Rectangle r2)
-    {
-        if (r1.Left )
-        {
-            
-        }
-    }
-*/
     #endregion
 }
