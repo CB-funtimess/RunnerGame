@@ -42,7 +42,7 @@ public class Player : Sprite
         IsRunning = false;
         if (!IsJumping)
         {
-            CurrentVelocity = new Vector2(0);
+            CurrentVelocity = new Vector2(0, CurrentVelocity.Y);
         }
     }
 

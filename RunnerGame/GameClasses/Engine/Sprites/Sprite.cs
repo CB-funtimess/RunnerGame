@@ -17,7 +17,6 @@ public class Sprite
     #endregion
 
     #region Properties
-    public bool IsPlatform { get; protected set; }
     public bool Enabled { get; protected set; }
     public int DrawOrder { get; set; }
     public Vector2 CurrentPosition { get; protected set; }
@@ -37,7 +36,6 @@ public class Sprite
         CurrentVelocity = velocity;
         Acceleration = acceleration;
         _doesDamageToPlayer = doesDamageToPlayer;
-        IsPlatform = false;
         this.colour = colour;
         dimensions = size.Size;
         CurrentPosition = size.Center.ToVector2();
@@ -56,10 +54,10 @@ public class Sprite
         PreviousPosition = CurrentPosition;
         PreviousVelocity = CurrentVelocity;
 
-        CurrentPosition += CurrentVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        CurrentVelocity += Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        
-        System.Console.WriteLine($"{Acceleration.Y}, {CurrentVelocity.Y}");
+        float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        CurrentPosition += CurrentVelocity * time + (float)0.5 * Acceleration * (float)Math.Pow(time, 2);
+        CurrentVelocity += Acceleration * time;
     }
 
     public virtual void Draw(SpriteBatch _spriteBatch)

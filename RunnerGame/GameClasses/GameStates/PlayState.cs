@@ -31,36 +31,40 @@ public class PlayState : GameState
     {
         this.game = game;
         content = game.Content;
+        paused = false;
     }
 
     public override void Initialize()
     {
         Rectangle p1Rect = new Rectangle(new Point(1280, 720), new Point(96, 96));
-        p1 = new Player(Color.White, p1Rect, new Vector2(0,0), new Vector2(0,400));
+        p1 = new Player(Color.White, p1Rect, new Vector2(0,0), new Vector2(0, 400));
         sprites = new List<Sprite>();
         gameObjects = new List<GameObject>();
     }
 
     public override void LoadContent()
     {
+        Rectangle window = game.Window.ClientBounds;
+
         p1.InitialiseAnimations(content);
 
         // Initialise sprites here
         sprites = Sorting.SortByDrawOrder(sprites.ToArray()).ToList();
 
-        Rectangle window = game.Window.ClientBounds;
         Texture2D generalBackgroundTexture = content.Load<Texture2D>("Backgrounds/Medium_Dark_Cave_Rocks_Background");
         GameObject background = new GameObject(generalBackgroundTexture, Color.White, window)
         {
             DrawOrder = 10
         };
 
-        Point lightSize = new Point(window.Width, window.Height / 9); //https://imageonline.co/repeat-image-generator.php
-        Rectangle lightRect = new Rectangle(new Point(0, window.Bottom - lightSize.Y), lightSize);
+        Point lightSize = new Point(window.Width, window.Height / 9);         
+        Rectangle lightBottomRect = new Rectangle(new Point(0, window.Bottom - lightSize.Y), lightSize);
+        //https://imageonline.co/repeat-image-generator.php
         Texture2D lightBackgroundTexture = content.Load<Texture2D>("Backgrounds/Cave_Rocks_Background");
-        GameObject lightBottomBackground = new GameObject(lightBackgroundTexture, Color.White, lightRect)
+        GameObject lightBottomBackground = new GameObject(lightBackgroundTexture, Color.White, lightBottomRect)
         {
-            DrawOrder = 9
+            DrawOrder = 9,
+            CanCollide = true
         };
         Rectangle lightTopRect = new Rectangle(new Point(0,0), lightSize);
         GameObject lightTopBackground = new GameObject(lightBackgroundTexture, Color.White, lightTopRect)
@@ -77,33 +81,44 @@ public class PlayState : GameState
         previousState = currentState;
         currentState = Keyboard.GetState();
         ProcessKeyboardInput();
-
-        for (int i = 0; i < sprites.Count; i++)
+        if (!paused)
         {
-            sprites[i].Update(gameTime);
+            for (int i = 0; i < gameObjects.Count; i++)
+            {
+                gameObjects[i].Update(gameTime);
+            }
+            for (int i = 0; i < sprites.Count; i++)
+            {
+                sprites[i].Update(gameTime);
+            }
+            p1.Update(gameTime);
+    
+            // Collision handling comes after sprites have been updated, so that their positions can be correctly modified
+            HandleCollisions(gameTime);
         }
-        for (int i = 0; i < gameObjects.Count; i++)
-        {
-            gameObjects[i].Update(gameTime);
-        }
-        p1.Update(gameTime);
-
-        // Collision handling comes after sprites have been updated, so that their positions can be correctly modified
     }
 
-    public void HandleCollisions()
+    public void HandleCollisions(GameTime gameTime)
     {
         // Find collisions between 
         for (int i = 0; i < sprites.Count; i++)
         {
             if (Collisions.RectanglesColliding(p1.ObjectRectangle, sprites[i].ObjectRectangle))
             {
-                if (sprites[i].IsPlatform)
+                // Inflict damage and such
+            }
+        }
+        for (int i = 0; i < gameObjects.Count; i++)
+        {
+            if (gameObjects[i].CanCollide)
+            {
+                if (Collisions.RectanglesColliding(p1.ObjectRectangle, gameObjects[i].ObjectRectangle) && p1.CurrentVelocity.Y >= 0)// If sprite is moving down
                 {
-                    if (p1.CurrentVelocity.Y >= 0) // If sprite is moving down
-                    {
-                        
-                    }
+                    double changeInYPosition = gameObjects[i].ObjectRectangle.Top - (p1.PreviousPosition.Y + (p1.ObjectRectangle.Height / 2));
+                    float time = (float)Collisions.SolveQuadratic(0.5f * p1.Acceleration.Y, p1.PreviousVelocity.Y, -changeInYPosition);
+                    Vector2 newPosition = p1.PreviousPosition;
+                    newPosition += new Vector2(p1.PreviousPosition.X * time, (float)changeInYPosition);
+                    p1.EndJumping(newPosition);
                 }
             }
         }
@@ -130,21 +145,24 @@ public class PlayState : GameState
     private void ProcessKeyboardInput()
     {
         Keys[] pressedKeys = currentState.GetPressedKeys();
-        if (!pressedKeys.Contains(Keys.A) || !pressedKeys.Contains(Keys.D))
+        if (!paused)
         {
-            p1.EndRunning();
-        }
-        if (pressedKeys.Contains(Keys.A) && !pressedKeys.Contains(Keys.D))
-        {
-            p1.BeginRunning(-1);
-        }
-        else if (pressedKeys.Contains(Keys.D) && !pressedKeys.Contains(Keys.A))
-        {
-            p1.BeginRunning(1);
-        }
-        if (pressedKeys.Contains(Keys.W) && !p1.IsJumping) // This needs finishing
-        {
-            p1.BeginJumping();
+            if (!pressedKeys.Contains(Keys.A) || !pressedKeys.Contains(Keys.D))
+            {
+                p1.EndRunning();
+            }
+            if (pressedKeys.Contains(Keys.A) && !pressedKeys.Contains(Keys.D))
+            {
+                p1.BeginRunning(-1);
+            }
+            else if (pressedKeys.Contains(Keys.D) && !pressedKeys.Contains(Keys.A))
+            {
+                p1.BeginRunning(1);
+            }
+            if (pressedKeys.Contains(Keys.W) && !p1.IsJumping) // This needs finishing
+            {
+                p1.BeginJumping();
+            }
         }
 
         if (pressedKeys.Contains(Keys.Escape))

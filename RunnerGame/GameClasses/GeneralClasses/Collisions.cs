@@ -55,8 +55,22 @@ public static class Collisions
     {
         return new double[]
         {
-                (-b + Math.Sqrt(Math.Pow(b,2) - (4*a*c))) / 2*a,
-                (-b - Math.Sqrt(Math.Pow(b,2) - (4*a*c))) / 2*a,
+            (-b + Math.Sqrt(Math.Pow(b,2) - (4*a*c))) / 2*a,
+            (-b - Math.Sqrt(Math.Pow(b,2) - (4*a*c))) / 2*a,
         };
+    }
+
+    /// <summary>
+    /// Finds the smallest positive root of an equation
+    /// </summary>
+    /// <returns></returns>
+    public static double SolveQuadratic(double a, double b, double c)
+    {
+        double[] roots = CalcRoots(a, b, c).Where(z => z >= 0).ToArray(); // find all positive roots
+        if (roots.Length > 0)
+        {
+            return roots.Min();
+        }
+        return -1;
     }
 }

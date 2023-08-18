@@ -14,6 +14,7 @@ public class GameObject
 
     #region Properties
     public bool Enabled;
+    public bool CanCollide;
     public Vector2 Position => position;
     public Vector2 TopLeftPoint => new Vector2(position.X - XRadius, position.Y - YRadius);
     public Rectangle ObjectRectangle => new Rectangle((int)TopLeftPoint.X, (int)TopLeftPoint.Y, dimensions.X, dimensions.Y);
@@ -24,7 +25,7 @@ public class GameObject
     #endregion
 
     #region Methods
-    public GameObject(Texture2D texture, Vector2 centralPosition, Color colour, Point dimensions)
+    public GameObject(Texture2D? texture, Vector2 centralPosition, Color colour, Point dimensions)
     {
         this.dimensions = dimensions;
         this.texture = texture;
@@ -34,7 +35,7 @@ public class GameObject
         DrawOrder = 5;
     }
 
-    public GameObject(Texture2D texture, Color colour, Rectangle size)
+    public GameObject(Texture2D? texture, Color colour, Rectangle size)
     {
         dimensions = size.Size;
         this.texture = texture;
@@ -47,7 +48,7 @@ public class GameObject
     // Method to draw objects using a rectangle
     public virtual void Draw(SpriteBatch _spriteBatch)
     {
-        if (Enabled)
+        if (Enabled && texture != null)
         {
             _spriteBatch.Draw(texture, ObjectRectangle, colour);
         }
