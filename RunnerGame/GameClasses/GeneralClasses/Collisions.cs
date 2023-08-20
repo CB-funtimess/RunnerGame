@@ -69,7 +69,7 @@ public static class Collisions
         double[] roots = CalcRoots(a, b, c).Where(z => z >= 0).ToArray(); // find all positive roots
         if (roots.Length > 0)
         {
-            return roots.Min();
+            return roots.Min() / 1000;
         }
         return -1;
     }

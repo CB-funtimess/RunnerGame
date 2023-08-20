@@ -36,8 +36,10 @@ public class PlayState : GameState
 
     public override void Initialize()
     {
-        Rectangle p1Rect = new Rectangle(new Point(1280, 720), new Point(96, 96));
-        p1 = new Player(Color.White, p1Rect, new Vector2(0,0), new Vector2(0, 400));
+        Point p1Size = new Point(96, 96);
+        Point middle = new Point(game.Window.ClientBounds.Center.X - (p1Size.X / 2), game.Window.ClientBounds.Center.Y - (p1Size.Y / 2));
+        Rectangle p1Rect = new Rectangle(middle, p1Size);
+        p1 = new Player(Color.White, p1Rect, new Vector2(0,0), new Vector2(0, 500));
         sprites = new List<Sprite>();
         gameObjects = new List<GameObject>();
     }
@@ -114,10 +116,10 @@ public class PlayState : GameState
             {
                 if (Collisions.RectanglesColliding(p1.ObjectRectangle, gameObjects[i].ObjectRectangle) && p1.CurrentVelocity.Y >= 0)// If sprite is moving down
                 {
-                    double changeInYPosition = gameObjects[i].ObjectRectangle.Top - (p1.PreviousPosition.Y + (p1.ObjectRectangle.Height / 2));
-                    float time = (float)Collisions.SolveQuadratic(0.5f * p1.Acceleration.Y, p1.PreviousVelocity.Y, -changeInYPosition);
+                    double changeInYPosition = Math.Abs(gameObjects[i].ObjectRectangle.Top - (p1.PreviousPosition.Y + (p1.ObjectRectangle.Height / 2)));
+                    float time = (float)Collisions.SolveQuadratic(0.5f * -p1.Acceleration.Y, -p1.PreviousVelocity.Y, changeInYPosition);
                     Vector2 newPosition = p1.PreviousPosition;
-                    newPosition += new Vector2(p1.PreviousPosition.X * time, (float)changeInYPosition);
+                    newPosition = new Vector2(p1.CurrentPosition.X, newPosition.Y + (float)changeInYPosition);
                     p1.EndJumping(newPosition);
                 }
             }

@@ -19,6 +19,7 @@ public class Player : Sprite
     #region Properties
     public bool IsRunning { get; protected set; }
     public bool IsJumping { get; protected set; }
+    public bool IsTouchingPlatform { get; protected set; }
     public int Lives { get; private set; }
     #endregion
 
@@ -28,13 +29,17 @@ public class Player : Sprite
         Enabled = true;
         Lives = 3;
         IsRunning = false;
-        IsJumping = false;
+        IsJumping = true; // When spawned in air
+        IsTouchingPlatform = false;
     }
 
     public void BeginRunning(int direction)
     {
-        IsRunning = true;
-        CurrentVelocity = new Vector2(speed * direction, CurrentVelocity.Y);
+        if (!IsJumping)
+        {
+            IsRunning = true;
+            CurrentVelocity = new Vector2(speed * direction, CurrentVelocity.Y);
+        }
     }
 
     public void EndRunning()
@@ -49,7 +54,7 @@ public class Player : Sprite
     public void BeginJumping()
     {
         IsJumping = true;
-        CurrentVelocity = new Vector2(CurrentVelocity.X, -500);
+        CurrentVelocity = new Vector2(CurrentVelocity.X, -600);
     }
 
     public void EndJumping(Vector2 newPosition)
