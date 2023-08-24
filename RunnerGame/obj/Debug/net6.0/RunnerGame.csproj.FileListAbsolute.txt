@@ -62,3 +62,4 @@ C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\S
 C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\SpriteSheets\Idle-Sheet-Player.xnb
 C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\SpriteSheets\Run-Sheet-Player.xnb
 C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\Backgrounds\Cave_Rocks_Background.xnb
+C:\Users\gsleg\Documents\GitHub\RunnerGame\RunnerGame\bin\Debug\net6.0\Content\ObjectTextures\Platform.xnb

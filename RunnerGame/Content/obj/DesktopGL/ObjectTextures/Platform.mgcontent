@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Platform.png</SourceFile>
-  <SourceTime>2023-07-24T11:46:23.0375488+01:00</SourceTime>
+  <SourceTime>2023-08-24T21:28:09.4034+01:00</SourceTime>
   <DestFile>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/bin/DesktopGL/ObjectTextures/Platform.xnb</DestFile>
-  <DestTime>2023-08-24T12:26:57.2403857+01:00</DestTime>
+  <DestTime>2023-08-24T21:31:05.7163785+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T12:44:56+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

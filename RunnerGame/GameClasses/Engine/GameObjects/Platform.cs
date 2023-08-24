@@ -6,7 +6,7 @@ using Engine.Sprites;
 
 namespace Engine.GeneralClasses;
 
-public class Platfrom : GameObject
+public class Platform : GameObject
 {
     #region Fields
     #endregion
@@ -15,11 +15,12 @@ public class Platfrom : GameObject
     #endregion
 
     #region Methods
-    public Platfrom(Texture2D texture, Color colour, Rectangle size) : base(texture, colour, size)
+    public Platform(Texture2D texture, Color colour, Rectangle size) : base(texture, colour, size)
     {
         CanCollide = true;
     }
 
+/*
     public override void Draw(SpriteBatch _spriteBatch)
     {
         // Draws the same texture to multiple places to create a line of textures.
@@ -32,6 +33,7 @@ public class Platfrom : GameObject
             start = new Rectangle(new Point((int)(TopLeftPoint.X + (size.X * (i+1))), (int)TopLeftPoint.Y), size);
         }
     }
+*/
     #endregion
     
 }
