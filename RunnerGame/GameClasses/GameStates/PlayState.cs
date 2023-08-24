@@ -53,6 +53,8 @@ public class PlayState : GameState
         // Initialise sprites here
         sprites = Sorting.SortByDrawOrder(sprites.ToArray()).ToList();
 
+
+        // Initialise GameObjects here
         Texture2D generalBackgroundTexture = content.Load<Texture2D>("Backgrounds/Medium_Dark_Cave_Rocks_Background");
         GameObject background = new GameObject(generalBackgroundTexture, Color.White, window)
         {
@@ -73,6 +75,9 @@ public class PlayState : GameState
         {
             DrawOrder = 9
         };
+        
+        Texture2D platformTexture = content.Load<Texture2D>("ObjectTextures/Platform");
+        
 
         gameObjects.AddRange(new GameObject[]{background, lightBottomBackground, lightTopBackground});
         gameObjects = Sorting.SortByDrawOrder(gameObjects.ToArray()).ToList();

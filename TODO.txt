@@ -1,0 +1,8 @@
+- Complete level editor for setup of platforms
+- Implement objects flying horizontally across screen, with AI increasing difficulty
+- Powerups
+- Sword/Shield/Bow for player
+- Enemies:
+    - Start with bowed enemies, that stay in one place and fire arrows to hit Player
+    - Combat enemies with AI-driven movement toward player
+- Blocks, like swords/shields?

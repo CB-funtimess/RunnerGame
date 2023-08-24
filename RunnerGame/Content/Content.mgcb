@@ -104,6 +104,18 @@
 /processorParam:TextureFormat=Color
 /build:ObjectTextures/Button_Unpressed.png
 
+#begin ObjectTextures/Platform.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ObjectTextures/Platform.png
+
 #begin ObjectTextures/Tomb_Runner.png
 /importer:TextureImporter
 /processor:TextureProcessor

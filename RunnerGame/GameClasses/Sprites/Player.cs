@@ -129,6 +129,4 @@ public class Player : Sprite
     }
 
     #endregion
-
-
 }
