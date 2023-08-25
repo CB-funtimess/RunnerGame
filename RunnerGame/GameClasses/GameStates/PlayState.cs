@@ -84,6 +84,9 @@ public class PlayState : GameState
 
         // Initialise sprites here
         sprites = Sorting.SortByDrawOrder(sprites.ToArray()).ToList();
+
+        System.Console.WriteLine($"{window.Height - (lightSize.Y * 2)}"); // 896 - so 56
+        System.Console.WriteLine(window.Width); //2048 - so 128
     }
 
     public override void Update(GameTime gameTime)
