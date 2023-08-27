@@ -1,10 +1,13 @@
+using System.Diagnostics;
+using System.Net;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Engine.GameObjects;
 using Engine.Sprites;
-using Microsoft.Xna.Framework.Input.Touch;
-using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
+using System.Xml.Schema;
+using System.Globalization;
 
 
 namespace GameClasses.GeneralClasses;
@@ -67,20 +70,32 @@ public class LevelEditor
         return new Rectangle(new Point(topLeft.X + (size.X / 2), topLeft.Y + (size.Y / 2)), size);
     }
 
-    private Rectangle[] ReadTextFile()
+    private Rectangle[] ReadLevelFile()
     {
-        List<Point> startPoints = new List<Point>(), endPoints = new List<Point>();
+        List<Rectangle> rectangles = new List<Rectangle>();
         using (var sr = new StreamReader(currentLevelFile))
         {
             string line;
             while ((line = sr.ReadLine()) != null)
             {
-                // Process to get all 4 points
-                // 0,0, 0,0
-                string[] chars = line.Split(',');
+                if (line.Length > 2)
+                {
+                    // Process to get all 4 points
+                    // Start:0,0,End:0,0
+                    string[] numbers = line.Split(',');
+                    //"Start:0", "0", "End:0", "0"
+                    // Using regex for sanitisation
+                    string pattern = "(Start:|End:)";
+                    for (int i = 0; i < numbers.Length; i++)
+                    {
+                        numbers[i] = Regex.Replace(numbers[i], pattern, String.Empty);
+                    }
+                    Point startPoint = new Point(Convert.ToInt32(numbers[0]), Convert.ToInt32(numbers[1])), endPoint = new Point(Convert.ToInt32(numbers[2]), Convert.ToInt32(numbers[3]));
+                    rectangles.Add(DecipherCoordinates(startPoint, endPoint));
+                }
             }
         }
-        return null;
+        return rectangles.ToArray();
     }
 
     public bool TriggerNextLevel()
