@@ -35,13 +35,13 @@ public class GameObject
         DrawOrder = 5;
     }
 
-    public GameObject(Texture2D? texture, Color colour, Rectangle size)
+    public GameObject(Texture2D? texture, Color colour, Rectangle objectRectangle)
     {
-        dimensions = size.Size;
+        dimensions = objectRectangle.Size;
         this.texture = texture;
         this.colour = colour;
         Enabled = true;
-        position = size.Center.ToVector2();
+        position = objectRectangle.Center.ToVector2();
         DrawOrder = 5;
     }
 

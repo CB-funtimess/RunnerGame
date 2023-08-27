@@ -22,13 +22,13 @@ public class LevelEditor
     private string currentLevelFile;
     private string[] allLevels = new string[]
     {
-        "Level1.txt",
-        "Level2.txt",
-        "Level3.txt",
-        "Level4.txt",
-        "Level5.txt"
+        "Levels/Level1.txt",
+        "Levels/Level2.txt",
+        "Levels/Level3.txt",
+        "Levels/Level4.txt",
+        "Levels/Level5.txt"
     };
-    private Rectangle availableRect;
+    public Rectangle AvailableRectangle;
     #endregion
 
     #region Properties
@@ -38,7 +38,7 @@ public class LevelEditor
     public LevelEditor(Rectangle window, Rectangle topBorder, Rectangle bottomBorder, Rectangle rightBorder, Rectangle leftBorder)
     {
         Point topLeft, bottomRight, size;
-        if (rightBorder != null && leftBorder != null)
+        if (rightBorder != default && leftBorder != default)
         {
             topLeft = new Point(leftBorder.Right, topBorder.Bottom);
             bottomRight = new Point(rightBorder.Left, bottomBorder.Top);
@@ -48,9 +48,10 @@ public class LevelEditor
         {
             topLeft = new Point(window.Left, topBorder.Bottom);
             bottomRight = new Point(window.Right, bottomBorder.Top);
-            size = new Point(bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y);
+            size = new Point(window.Width, window.Height - (topBorder.Height + bottomBorder.Height));
         }
-        availableRect = new Rectangle(topLeft, size);
+        AvailableRectangle = new Rectangle(topLeft, size);
+
         
         currentLevelFile = allLevels[0];
     }
@@ -63,14 +64,14 @@ public class LevelEditor
     /// <returns></returns>
     private Rectangle DecipherCoordinates(Point start, Point end)
     {
-        float xScale = availableRect.Width / 128;
-        float yScale = availableRect.Height / 56;
-        Point topLeft = new Point((int)(availableRect.Left + (xScale * start.X)), (int)(availableRect.Top + (yScale * start.Y)));
+        float xScale = AvailableRectangle.Width / 128;
+        float yScale = AvailableRectangle.Height / 56;
+        Point topLeft = new Point((int)(AvailableRectangle.Left + (xScale * start.X)), (int)(AvailableRectangle.Top + (yScale * start.Y)));
         Point size = new Point((int)((end.X - start.X + 1) * xScale), (int)((end.Y - start.Y + 1) * yScale));
-        return new Rectangle(new Point(topLeft.X + (size.X / 2), topLeft.Y + (size.Y / 2)), size);
+        return new Rectangle(new Point(topLeft.X, topLeft.Y), size);
     }
 
-    private Rectangle[] ReadLevelFile()
+    public Rectangle[] ReadLevelFile()
     {
         List<Rectangle> rectangles = new List<Rectangle>();
         using (var sr = new StreamReader(currentLevelFile))
@@ -91,7 +92,8 @@ public class LevelEditor
                         numbers[i] = Regex.Replace(numbers[i], pattern, String.Empty);
                     }
                     Point startPoint = new Point(Convert.ToInt32(numbers[0]), Convert.ToInt32(numbers[1])), endPoint = new Point(Convert.ToInt32(numbers[2]), Convert.ToInt32(numbers[3]));
-                    rectangles.Add(DecipherCoordinates(startPoint, endPoint));
+                    Rectangle temp = DecipherCoordinates(startPoint, endPoint);
+                    rectangles.Add(temp);
                 }
             }
         }

@@ -25,6 +25,7 @@ public class Sprite
     public Vector2 PreviousVelocity { get; protected set; }
     public Vector2 Acceleration { get; protected set; }
     public Vector2 TopLeftPoint => new Vector2(CurrentPosition.X - XRadius, CurrentPosition.Y - YRadius);
+    public Rectangle PreviousObjectRectangle;
     public Rectangle ObjectRectangle => new Rectangle((int)TopLeftPoint.X, (int)TopLeftPoint.Y, dimensions.X, dimensions.Y);
     public int XRadius => dimensions.X / 2;
     public int YRadius => dimensions.Y / 2;
@@ -51,6 +52,7 @@ public class Sprite
 
     public virtual void Update(GameTime gameTime)
     {
+        PreviousObjectRectangle = ObjectRectangle;
         PreviousPosition = CurrentPosition;
         PreviousVelocity = CurrentVelocity;
 

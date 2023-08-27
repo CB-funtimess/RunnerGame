@@ -1,0 +1,5 @@
+Start:21,14,End:42,15
+Start:84,14,End:105,15
+Start:21,42,End:42,43
+Start:84,42,End:105,43
+Start:52,28,End:74,29

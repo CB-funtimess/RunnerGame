@@ -15,6 +15,7 @@ public class PlayState : GameState
 {
     #region Fields
     private bool paused;
+    private LevelEditor editor;
     private Player p1;
     private List<Sprite> sprites;
     private List<GameObject> gameObjects;
@@ -36,7 +37,6 @@ public class PlayState : GameState
 
     public override void Initialize()
     {
-        
         sprites = new List<Sprite>();
         gameObjects = new List<GameObject>();
     }
@@ -56,24 +56,28 @@ public class PlayState : GameState
         Rectangle lightBottomRect = new Rectangle(new Point(0, window.Bottom - lightSize.Y), lightSize);
         //https://imageonline.co/repeat-image-generator.php
         Texture2D lightBackgroundTexture = content.Load<Texture2D>("Backgrounds/Cave_Rocks_Background");
-        GameObject lightBottomBackground = new GameObject(lightBackgroundTexture, Color.White, lightBottomRect)
+        Platform lightBottomBackground = new Platform(lightBackgroundTexture, Color.White, lightBottomRect)
         {
             DrawOrder = 9,
-            CanCollide = true
         };
         Rectangle lightTopRect = new Rectangle(new Point(0,0), lightSize);
         GameObject lightTopBackground = new GameObject(lightBackgroundTexture, Color.White, lightTopRect)
         {
             DrawOrder = 9
         };
-        
-        Texture2D platformTexture = content.Load<Texture2D>("ObjectTextures/Platform");
-        Point platSize = new Point(128, 32);
-        Rectangle testPlatRect = new Rectangle(new Point(window.Center.X - (platSize.X / 2), window.Center.Y - (platSize.Y / 2)), platSize);
-        Platform testPlat = new Platform(platformTexture, Color.White, testPlatRect);
-        
 
-        gameObjects.AddRange(new GameObject[]{background, lightBottomBackground, lightTopBackground, testPlat});
+        // Initialisation of game objects and sprites
+        editor = new LevelEditor(window, lightTopRect, lightBottomRect, default, default);
+        Texture2D platformTexture = content.Load<Texture2D>("ObjectTextures/Platform");
+
+        Rectangle[] rectangles = editor.ReadLevelFile();
+        foreach (var rectangle in rectangles)
+        {
+            Platform tempPlatform = new Platform(platformTexture, Color.White, rectangle);
+            gameObjects.Add(tempPlatform);
+        }
+
+        gameObjects.AddRange(new GameObject[]{background, lightBottomBackground, lightTopBackground});
         gameObjects = Sorting.SortByDrawOrder(gameObjects.ToArray()).ToList();
 
         Point p1Size = new Point(96, 96);
@@ -122,7 +126,7 @@ public class PlayState : GameState
         {
             if (gameObjects[i].CanCollide)
             {
-                if (Collisions.RectanglesColliding(p1.ObjectRectangle, gameObjects[i].ObjectRectangle) && (p1.ObjectRectangle.Bottom <= gameObjects[i].ObjectRectangle.Top + 1))// If sprite is moving down
+                if (Collisions.RectanglesColliding(p1.ObjectRectangle, gameObjects[i].ObjectRectangle) && ((p1.PreviousVelocity.Y > 0 && p1.PreviousObjectRectangle.Bottom < gameObjects[i].ObjectRectangle.Top) || p1.PreviousVelocity.Y == 0))// If sprite is moving down
                 {
                     double changeInYPosition = Math.Abs(gameObjects[i].ObjectRectangle.Top - (p1.PreviousPosition.Y + (p1.ObjectRectangle.Height / 2)));
                     float time = (float)Collisions.SolveQuadratic(0.5f * -p1.Acceleration.Y, -p1.PreviousVelocity.Y, changeInYPosition);
@@ -131,6 +135,11 @@ public class PlayState : GameState
                     p1.EndJumping(newPosition);
                 }
             }
+        }
+        // Ensure player stays within game bounds
+        if ()
+        {
+            
         }
     }
 

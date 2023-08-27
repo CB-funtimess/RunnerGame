@@ -12,6 +12,7 @@ public class Platform : GameObject
     #endregion
 
     #region Properties
+    public Rectangle PreviousObjectRectangle;
     #endregion
 
     #region Methods
@@ -20,20 +21,10 @@ public class Platform : GameObject
         CanCollide = true;
     }
 
-/*
-    public override void Draw(SpriteBatch _spriteBatch)
+    public override void Update(GameTime gameTime)
     {
-        // Draws the same texture to multiple places to create a line of textures.
-        double scaleFactor = dimensions.Y / texture.Height;
-        Point size = new Point((int)(texture.Width * scaleFactor), dimensions.Y);
-        Rectangle start = new Rectangle(TopLeftPoint.ToPoint(), size);
-        for (int i = 0; i < dimensions.Y / size.Y; i++)
-        {
-            _spriteBatch.Draw(texture, start, colour);
-            start = new Rectangle(new Point((int)(TopLeftPoint.X + (size.X * (i+1))), (int)TopLeftPoint.Y), size);
-        }
+        PreviousObjectRectangle = ObjectRectangle;
     }
-*/
     #endregion
     
 }
