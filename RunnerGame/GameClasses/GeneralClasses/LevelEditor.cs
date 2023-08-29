@@ -15,8 +15,8 @@ namespace GameClasses.GeneralClasses;
 public class LevelEditor
 {
     // Reads in a .txt file for the occurrences on the level
-        // Each line contains the start and end points of a platform
-        // i.e. 0,0 1,0 represents a 32x16 rectangle in the top left corner
+    // Each line contains the start and end points of a platform
+    // i.e. 0,0 1,0 represents a 32x16 rectangle in the top left corner
     // Playable area is split into a 128x56 grid, so points addressable up to 127x55 since first coord is 0,0
     #region Fields
     private string currentLevelFile;
@@ -28,7 +28,7 @@ public class LevelEditor
         "Levels/Level4.txt",
         "Levels/Level5.txt"
     };
-    public Rectangle AvailableRectangle;
+    public Rectangle AvailableRectangle { get; private set; }
     #endregion
 
     #region Properties
@@ -52,7 +52,7 @@ public class LevelEditor
         }
         AvailableRectangle = new Rectangle(topLeft, size);
 
-        
+
         currentLevelFile = allLevels[0];
     }
 

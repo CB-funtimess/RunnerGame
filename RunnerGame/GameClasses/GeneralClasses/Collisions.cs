@@ -1,4 +1,5 @@
 using Engine.Sprites;
+using GameClasses.Sprites;
 using Microsoft.Xna.Framework;
 
 namespace GameClasses.GeneralClasses;
@@ -72,5 +73,30 @@ public static class Collisions
             return roots.Min() / 1000;
         }
         return -1;
+    }
+
+    public static void HandleBoundaryCollisions(ref Player player, Rectangle window)
+    {
+        if (player.ObjectRectangle.Top < window.Top)
+        {
+            // Player instantly starts moving down/y velocity = 0
+            player.SetVelocity(new Vector2(player.CurrentVelocity.X, 0));
+            // Player's location is handled to be directly below/touching boundary - x position stays the same, but y position needs adjustment
+            Vector2 newPosition = new Vector2(player.CurrentPosition.X, window.Top + player.YRadius);
+            player.SetPosition(newPosition);
+        }
+        // Bottom of window does not need adjusting since already handled
+        if (player.ObjectRectangle.Left < window.Left)
+        {
+            player.SetVelocity(new Vector2(0, player.CurrentVelocity.Y));
+            Vector2 newPosition = new Vector2(window.Left + player.XRadius, player.CurrentPosition.Y);
+            player.SetPosition(newPosition);
+        }
+        else if (player.ObjectRectangle.Right > window.Right)
+        {
+            player.SetVelocity(new Vector2(0, player.CurrentVelocity.Y));
+            Vector2 newPosition = new Vector2(window.Right - player.XRadius, player.CurrentPosition.Y);
+            player.SetPosition(newPosition);
+        }
     }
 }

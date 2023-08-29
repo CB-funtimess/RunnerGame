@@ -13,7 +13,8 @@ public class Player : Sprite
     private Animation runAnimation;
     private Animation idleAnimation;
     private Animation deathAnimation;
-    private const int speed = 100;
+    public int speed;
+    public int jumpSpeed;
     #endregion
 
     #region Properties
@@ -39,6 +40,14 @@ public class Player : Sprite
         {
             IsRunning = true;
             CurrentVelocity = new Vector2(speed * direction, CurrentVelocity.Y);
+            if (direction < 0)
+            {
+                backwards = true;
+            }
+            else
+            {
+                backwards = false;
+            }
         }
     }
 
@@ -54,13 +63,23 @@ public class Player : Sprite
     public void BeginJumping()
     {
         IsJumping = true;
-        CurrentVelocity = new Vector2(CurrentVelocity.X, -600);
+        CurrentVelocity = new Vector2(CurrentVelocity.X, jumpSpeed);
     }
 
     public void EndJumping(Vector2 newPosition)
     {
         IsJumping = false;
         CurrentVelocity = new Vector2(CurrentVelocity.X, 0);
+        CurrentPosition = newPosition;
+    }
+
+    public void SetVelocity(Vector2 newVelocity)
+    {
+        CurrentVelocity = newVelocity;
+    }
+
+    public void SetPosition(Vector2 newPosition)
+    {
         CurrentPosition = newPosition;
     }
 
@@ -109,7 +128,7 @@ public class Player : Sprite
         {
             _inUseAnimation = idleAnimation;
         }
-
+/*
         if (CurrentVelocity.X < 0)
         {
             backwards = true;
@@ -118,7 +137,7 @@ public class Player : Sprite
         {
             backwards = false;
         }
-
+*/
         base.Draw(_spriteBatch);
     }
 

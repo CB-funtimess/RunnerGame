@@ -1,4 +1,4 @@
-- Complete level editor for setup of platforms
+- Complete level editor for setup of platforms (COMPLETE)
 - Implement objects flying horizontally across screen, with AI increasing difficulty
 - Powerups
 - Sword/Shield/Bow for player

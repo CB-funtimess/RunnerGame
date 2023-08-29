@@ -19,6 +19,8 @@ public class PlayState : GameState
     private Player p1;
     private List<Sprite> sprites;
     private List<GameObject> gameObjects;
+    private Rectangle window;
+    private Rectangle playingWindow;
 
     private KeyboardState previousState;
     private KeyboardState currentState;
@@ -43,7 +45,7 @@ public class PlayState : GameState
 
     public override void LoadContent()
     {
-        Rectangle window = game.Window.ClientBounds;
+        window = game.Window.ClientBounds;
 
         // Initialise GameObjects here
         Texture2D generalBackgroundTexture = content.Load<Texture2D>("Backgrounds/Medium_Dark_Cave_Rocks_Background");
@@ -69,6 +71,7 @@ public class PlayState : GameState
         // Initialisation of game objects and sprites
         editor = new LevelEditor(window, lightTopRect, lightBottomRect, default, default);
         Texture2D platformTexture = content.Load<Texture2D>("ObjectTextures/Platform");
+        playingWindow = editor.AvailableRectangle;
 
         Rectangle[] rectangles = editor.ReadLevelFile();
         foreach (var rectangle in rectangles)
@@ -83,7 +86,11 @@ public class PlayState : GameState
         Point p1Size = new Point(96, 96);
         Point p1Spawn = new Point(lightBottomRect.Center.X - (p1Size.X / 2), lightBottomRect.Top - (p1Size.Y));
         Rectangle p1Rect = new Rectangle(p1Spawn, p1Size);
-        p1 = new Player(Color.White, p1Rect, new Vector2(0,0), new Vector2(0, 500));
+        p1 = new Player(Color.White, p1Rect, new Vector2(0,0), new Vector2(0, 900))
+        {
+            speed = 175,
+            jumpSpeed = -700
+        };
         p1.InitialiseAnimations(content);
 
         // Initialise sprites here
@@ -129,7 +136,7 @@ public class PlayState : GameState
                 if (Collisions.RectanglesColliding(p1.ObjectRectangle, gameObjects[i].ObjectRectangle) && ((p1.PreviousVelocity.Y > 0 && p1.PreviousObjectRectangle.Bottom < gameObjects[i].ObjectRectangle.Top) || p1.PreviousVelocity.Y == 0))// If sprite is moving down
                 {
                     double changeInYPosition = Math.Abs(gameObjects[i].ObjectRectangle.Top - (p1.PreviousPosition.Y + (p1.ObjectRectangle.Height / 2)));
-                    float time = (float)Collisions.SolveQuadratic(0.5f * -p1.Acceleration.Y, -p1.PreviousVelocity.Y, changeInYPosition);
+                    //float time = (float)Collisions.SolveQuadratic(0.5f * -p1.Acceleration.Y, -p1.PreviousVelocity.Y, changeInYPosition);
                     Vector2 newPosition = p1.PreviousPosition;
                     newPosition = new Vector2(p1.CurrentPosition.X, newPosition.Y + (float)changeInYPosition);
                     p1.EndJumping(newPosition);
@@ -137,10 +144,7 @@ public class PlayState : GameState
             }
         }
         // Ensure player stays within game bounds
-        if ()
-        {
-            
-        }
+        Collisions.HandleBoundaryCollisions(ref p1, playingWindow);
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch _spriteBatch)
@@ -170,15 +174,17 @@ public class PlayState : GameState
             {
                 p1.EndRunning();
             }
-            if (pressedKeys.Contains(Keys.A) && !pressedKeys.Contains(Keys.D))
+
+            if (pressedKeys.Contains(Keys.A) && !pressedKeys.Contains(Keys.D) && p1.CurrentVelocity.Y == 0)
             {
                 p1.BeginRunning(-1);
             }
-            else if (pressedKeys.Contains(Keys.D) && !pressedKeys.Contains(Keys.A))
+            else if (pressedKeys.Contains(Keys.D) && !pressedKeys.Contains(Keys.A) && p1.CurrentVelocity.Y == 0)
             {
                 p1.BeginRunning(1);
             }
-            if (pressedKeys.Contains(Keys.W) && !p1.IsJumping) // This needs finishing
+
+            if (pressedKeys.Contains(Keys.W) && !p1.IsJumping)
             {
                 p1.BeginJumping();
             }
