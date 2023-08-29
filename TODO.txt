@@ -1,5 +1,6 @@
 - Complete level editor for setup of platforms (COMPLETE)
 - Implement objects flying horizontally across screen, with AI increasing difficulty
+    - Projectiles need to implement a particle system
 - Powerups
 - Sword/Shield/Bow for player
 - Enemies:
