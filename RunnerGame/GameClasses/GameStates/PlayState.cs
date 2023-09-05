@@ -19,6 +19,8 @@ public class PlayState : GameState
     private Player p1;
     private List<Sprite> sprites;
     private List<GameObject> gameObjects;
+    private List<ChangeTextureObj> hearts;
+    private List<ChangeTextureObj> shields;
     private Rectangle window;
     private Rectangle playingWindow;
 
@@ -41,6 +43,8 @@ public class PlayState : GameState
     {
         sprites = new List<Sprite>();
         gameObjects = new List<GameObject>();
+        hearts = new List<ChangeTextureObj>();
+        shields = new List<ChangeTextureObj>();
     }
 
     public override void LoadContent()
@@ -54,7 +58,7 @@ public class PlayState : GameState
             DrawOrder = 10
         };
 
-        Point lightSize = new Point(window.Width, window.Height / 9);         
+        Point lightSize = new Point(window.Width, window.Height / 9);
         Rectangle lightBottomRect = new Rectangle(new Point(0, window.Bottom - lightSize.Y), lightSize);
         //https://imageonline.co/repeat-image-generator.php
         Texture2D lightBackgroundTexture = content.Load<Texture2D>("Backgrounds/Cave_Rocks_Background");
@@ -62,7 +66,7 @@ public class PlayState : GameState
         {
             DrawOrder = 9,
         };
-        Rectangle lightTopRect = new Rectangle(new Point(0,0), lightSize);
+        Rectangle lightTopRect = new Rectangle(new Point(0, 0), lightSize);
         GameObject lightTopBackground = new GameObject(lightBackgroundTexture, Color.White, lightTopRect)
         {
             DrawOrder = 9
@@ -80,18 +84,40 @@ public class PlayState : GameState
             gameObjects.Add(tempPlatform);
         }
 
-        gameObjects.AddRange(new GameObject[]{background, lightBottomBackground, lightTopBackground});
+        gameObjects.AddRange(new GameObject[] { background, lightBottomBackground, lightTopBackground });
         gameObjects = Sorting.SortByDrawOrder(gameObjects.ToArray()).ToList();
 
         Point p1Size = new Point(96, 96);
-        Point p1Spawn = new Point(lightBottomRect.Center.X - (p1Size.X / 2), lightBottomRect.Top - (p1Size.Y));
+        Point p1Spawn = new Point(lightBottomRect.Center.X - (p1Size.X / 2), lightBottomRect.Top - p1Size.Y);
         Rectangle p1Rect = new Rectangle(p1Spawn, p1Size);
-        p1 = new Player(Color.White, p1Rect, new Vector2(0,0), new Vector2(0, 900))
+        p1 = new Player(Color.White, p1Rect, new Vector2(0, 0), new Vector2(0, 900))
         {
             speed = 175,
             jumpSpeed = -700
         };
         p1.InitialiseAnimations(content);
+
+        // Initialisation of hearts and shields
+        Texture2D heartEmpty = content.Load<Texture2D>("ObjectTextures/Heart_Empty");
+        Texture2D heartFull = content.Load<Texture2D>("ObjectTextures/Heart_Full");
+        Texture2D shieldFull = content.Load<Texture2D>("ObjectTextures/Shield_Full");
+        Texture2D shieldEmpty = content.Load<Texture2D>("ObjectTextures/Shield_Empty");
+        // Hearts/shields will be 3/4 height of bottom rect
+        Point heartSize = new Point((int)(lightSize.Y * 0.45));
+        int distBottomStartHeart = (int)((lightSize.Y - heartSize.Y) / 2);
+        Rectangle heartRect = new Rectangle(new Point(distBottomStartHeart, window.Bottom - distBottomStartHeart - heartSize.Y), heartSize);
+        for (int i = 0; i < p1.Hearts; i++)
+        {
+            hearts.Add(new ChangeTextureObj(new Texture2D[]{heartFull, heartEmpty}, Color.White, heartRect));
+            Point newPosition = new Point(heartRect.Right + 10, heartRect.Y);
+            heartRect = new Rectangle(newPosition, heartSize);
+        }
+        for (int i = 0; i < p1.Shields; i++)
+        {
+            shields.Add(new ChangeTextureObj(new Texture2D[]{shieldFull, shieldEmpty}, Color.White, heartRect));
+            Point newPosition = new Point(heartRect.Right + 10, heartRect.Y);
+            heartRect = new Rectangle(newPosition, heartSize);
+        }
 
         // Initialise sprites here
         sprites = Sorting.SortByDrawOrder(sprites.ToArray()).ToList();
@@ -113,7 +139,7 @@ public class PlayState : GameState
                 sprites[i].Update(gameTime);
             }
             p1.Update(gameTime);
-    
+
             // Collision handling comes after sprites have been updated, so that their positions can be correctly modified
             HandleCollisions(gameTime);
         }
@@ -140,6 +166,7 @@ public class PlayState : GameState
                     Vector2 newPosition = p1.PreviousPosition;
                     newPosition = new Vector2(p1.CurrentPosition.X, newPosition.Y + (float)changeInYPosition);
                     p1.EndJumping(newPosition);
+                    p1.IsTouchingPlatform = true;
                 }
             }
         }
@@ -152,6 +179,14 @@ public class PlayState : GameState
         for (int i = 0; i < gameObjects.Count; i++)
         {
             gameObjects[i].Draw(_spriteBatch);
+        }
+        for (int i = 0; i < hearts.Count; i++)
+        {
+            hearts[i].Draw(_spriteBatch);
+        }
+        for (int i = 0; i < shields.Count; i++)
+        {
+            shields[i].Draw(_spriteBatch);
         }
         for (int i = 0; i < sprites.Count; i++)
         {
@@ -170,21 +205,21 @@ public class PlayState : GameState
         Keys[] pressedKeys = currentState.GetPressedKeys();
         if (!paused)
         {
-            if (!pressedKeys.Contains(Keys.A) || !pressedKeys.Contains(Keys.D))
+            if (!(pressedKeys.Contains(Keys.A) && pressedKeys.Contains(Keys.D)))
             {
                 p1.EndRunning();
             }
 
-            if (pressedKeys.Contains(Keys.A) && !pressedKeys.Contains(Keys.D) && p1.CurrentVelocity.Y == 0)
+            if (pressedKeys.Contains(Keys.A) && !pressedKeys.Contains(Keys.D)/* && p1.CurrentVelocity.Y == 0*/)
             {
                 p1.BeginRunning(-1);
             }
-            else if (pressedKeys.Contains(Keys.D) && !pressedKeys.Contains(Keys.A) && p1.CurrentVelocity.Y == 0)
+            else if (pressedKeys.Contains(Keys.D) && !pressedKeys.Contains(Keys.A)/* && p1.CurrentVelocity.Y == 0*/)
             {
                 p1.BeginRunning(1);
             }
 
-            if (pressedKeys.Contains(Keys.W) && !p1.IsJumping)
+            if (pressedKeys.Contains(Keys.W) && !p1.IsJumping && p1.IsTouchingPlatform)
             {
                 p1.BeginJumping();
             }

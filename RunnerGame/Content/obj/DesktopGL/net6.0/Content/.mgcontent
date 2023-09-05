@@ -12,13 +12,27 @@
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/Fonts/Earthrealm12.spritefont</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Button_Pressed.png</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Button_Unpressed.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Fire_Projectile.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Heart_Empty.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Heart_Full.png</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Platform.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Poison_Projectile.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Projectile.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Shield_Empty.png</File>
+    <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Shield_Full.png</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/ObjectTextures/Tomb_Runner.png</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/SpriteSheets/Death-Sheet-Player.png</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/SpriteSheets/Idle-Sheet-Player.png</File>
     <File>C:/Users/gsleg/Documents/GitHub/RunnerGame/RunnerGame/Content/SpriteSheets/Run-Sheet-Player.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

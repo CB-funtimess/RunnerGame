@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Engine.Sprites;
 using GameClasses.GeneralClasses;
+using System.Security.Cryptography;
 
 
 namespace GameClasses.Sprites;
@@ -20,18 +21,20 @@ public class Player : Sprite
     #region Properties
     public bool IsRunning { get; protected set; }
     public bool IsJumping { get; protected set; }
-    public bool IsTouchingPlatform { get; protected set; }
-    public int Lives { get; private set; }
+    public bool IsTouchingPlatform { get; set; }
+    public int Hearts { get; private set; }
+    public int Shields { get; private set; }
     #endregion
 
     #region Methods
     public Player(Color colour, Rectangle size, Vector2 velocity, Vector2 acceleration) : base(colour, size, velocity, acceleration, false)
     {
         Enabled = true;
-        Lives = 3;
+        Hearts = 3;
+        Shields = 3;
         IsRunning = false;
-        IsJumping = true; // When spawned in air
-        IsTouchingPlatform = false;
+        IsJumping = false;
+        IsTouchingPlatform = true;
     }
 
     public void BeginRunning(int direction)
@@ -116,7 +119,7 @@ public class Player : Sprite
 
     public override void Draw(SpriteBatch _spriteBatch)
     {
-        if (Lives == 0)
+        if (Hearts == 0)
         {
             _inUseAnimation = deathAnimation;
         }
@@ -128,22 +131,25 @@ public class Player : Sprite
         {
             _inUseAnimation = idleAnimation;
         }
-/*
-        if (CurrentVelocity.X < 0)
-        {
-            backwards = true;
-        }
-        else
-        {
-            backwards = false;
-        }
-*/
         base.Draw(_spriteBatch);
     }
 
     public override void Update(GameTime gameTime)
     {
+        if (IsJumping)
+        {
+            IsRunning = false;
+        }
+        if (IsRunning)
+        {
+            IsJumping = false;
+        }
+        if (CurrentVelocity.Y != 0)
+        {
+            IsJumping = true;
+        }
         _inUseAnimation.Update(gameTime);
+        IsTouchingPlatform = false;
         base.Update(gameTime);
     }
 
